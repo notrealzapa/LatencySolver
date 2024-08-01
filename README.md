@@ -55,4 +55,9 @@ The models were evaluated on the SuperGLUE BoolQ dataset. Below are the results:
 ## How to Run the Experiments
 1. **Install dependencies**:
    ```bash
-   pip install datasets transformers optuna safetensors
+   pip install datasets transformers optuna safetensors cohere
+   git clone https://github.com/notrealzapa/LatencySolver.git
+   cd LatencySolver
+   python final_latency.py
+
+
