@@ -1,52 +1,58 @@
-# LatencySolver: Reducing Latency in NLP Models
+# LatencySolver
 
-This project aims to drastically reduce the latency of Natural Language Processing (NLP) models from approximately 4 seconds to 0.02 seconds using a combination of techniques such as model pruning, dynamic quantization, and custom lightweight architectures.
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Techniques Used](#techniques-used)
-  - [Custom Lightweight Model](#custom-lightweight-model)
-  - [Model Pruning](#model-pruning)
-  - [Dynamic Quantization](#dynamic-quantization)
-  - [Knowledge Distillation](#knowledge-distillation)
-- [Results](#results)
-- [Usage](#usage)
-  - [Installation](#installation)
-  - [Running the Notebook](#running-the-notebook)
-- [Future Work](#future-work)
-- [Contributors](#contributors)
-
-## Introduction
-LatencySolver is a project designed to optimize the performance of NLP models by significantly reducing inference latency. We achieved this by creating a custom lightweight model, applying model pruning, and using dynamic quantization. Additionally, we explored knowledge distillation to further enhance the model's efficiency.
+## Overview
+This research project focuses on reducing the latency of machine learning models while maintaining or improving their performance. Various techniques, including pruning, quantization, dynamic layer skipping, and low-rank factorization, are explored and applied to different models. The models experimented with include ChatGPT, Roberta, and Roberta-base.
 
 ## Techniques Used
+- **Pruning**: Removing less significant connections in the network to reduce the model size and inference time.
+- **Quantization**: Converting the model weights from floating-point to lower precision to speed up inference.
+- **Dynamic Layer Skipping**: Randomly skipping certain layers during inference to reduce computation.
+- **Low-Rank Factorization**: Decomposing weight matrices into lower-rank matrices to reduce the number of parameters and computation.
 
-### Custom Lightweight Model
-We designed a custom lightweight model with a smaller embedding layer and convolutional layers to process input data efficiently. This model architecture reduces the computational complexity while maintaining reasonable accuracy.
+## Experimental Results
+The models were evaluated on the SuperGLUE BoolQ dataset. Below are the results:
 
-### Model Pruning
-Pruning involves removing less significant weights from the model. We applied unstructured pruning to the linear and convolutional layers of our custom model to reduce the number of parameters and enhance inference speed.
+### ChatGPT
+- **Validation Loss**: 0.679919
+- **Accuracy**: 0.76
+- **Inference Time**: 0.002375 seconds
+- **Quantized Model Results**: 
+  - **Evaluation Loss**: 0.666115
+  - **Evaluation Accuracy**: 0.76
+  - **Evaluation Runtime**: 0.1276 seconds
+  - **Evaluation Samples per Second**: 391.844
+  - **Evaluation Steps per Second**: 54.858
 
-### Dynamic Quantization
-Dynamic quantization reduces the precision of weights and biases, resulting in a faster and smaller model. This technique was applied to the pruned model to further optimize it.
+### Roberta
+- **Validation Loss**: 0.668457
+- **Accuracy**: 0.78
+- **Inference Time**: 0.040804 seconds
+- **Quantized Model Results**: 
+  - **Evaluation Loss**: 0.655232
+  - **Evaluation Accuracy**: 0.78
+  - **Evaluation Runtime**: 0.2111 seconds
+  - **Evaluation Samples per Second**: 236.816
+  - **Evaluation Steps per Second**: 33.154
 
-### Knowledge Distillation
-We used knowledge distillation to transfer knowledge from a larger, pre-trained teacher model to our custom lightweight student model. This technique helps the student model achieve better performance by learning from the teacher model's outputs.
+### Roberta-base
+- **Validation Loss**: 0.691212
+- **Accuracy**: 0.66
+- **Inference Time**: 0.018711 seconds
+- **Quantized Model Results**: 
+  - **Evaluation Loss**: 0.691451
+  - **Evaluation Accuracy**: 0.66
+  - **Evaluation Runtime**: 0.2087 seconds
+  - **Evaluation Samples per Second**: 239.564
+  - **Evaluation Steps per Second**: 33.539
 
-## Results
-- **Baseline Inference Time**: ~4 seconds
-- **Optimized Inference Time**: ~0.02 seconds
-- **Model Performance**:
-  - **Training Loss**: 0.647900
-  - **Validation Loss**: 0.614900
-  - **Accuracy**: 0.683824
-  - **F1 Score**: 0.812227
+## Visual Results
+![Results Comparison](output_720.png)
 
-## Usage
+## Next Steps
+1. **Optimization**: Further optimize ChatGPT, as it shows promising inference times with competitive accuracy. Fine-tune the hyperparameters for Roberta to potentially reduce inference time while maintaining accuracy.
+2. **Additional Techniques**: Explore additional compression techniques like quantization-aware training or mixed-precision training to further reduce inference time without compromising accuracy. Implement advanced pruning methods to see if further improvements in model size and inference speed can be achieved.
 
-### Installation
-To use this project, clone the repository and install the required packages:
-```bash
-git clone https://github.com/notrealzapa/LatencySolver.git
-cd LatencySolver
-pip install -r requirements.txt
+## How to Run the Experiments
+1. **Install dependencies**:
+   ```bash
+   pip install datasets transformers optuna safetensors
